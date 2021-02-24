@@ -33,7 +33,7 @@ def Terms_and_Conditions():
     '''
     #*******************************************
     # CHANGE HERE: if you have read and agree with the term above, change "False" to "True".
-    Read_and_Agree = False
+    Read_and_Agree = True
     #*******************************************
     return Read_and_Agree
 
@@ -55,7 +55,7 @@ def Terms_and_Conditions():
 def least_square(X, y):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    w = np.linalg.inv(X.T@X)@X.T@y
     #########################################
     return w
 #---------------------
