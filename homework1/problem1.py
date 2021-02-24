@@ -84,7 +84,7 @@ def least_square(X, y):
 def ridge_regression(X, y, alpha=0.001):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    w = np.linalg.inv(X.T@X + alpha * (np.eye(X.shape[1])))@X.T@y
     #########################################
     return w
 #---------------------
