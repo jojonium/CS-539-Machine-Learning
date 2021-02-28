@@ -72,7 +72,7 @@ def compute_fx(x, w, b):
 def compute_gx(x, w, b):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    gx = 1 if (compute_fx(x, w, b) >= 0) else -1
     #########################################
     return gx
 #---------------------
