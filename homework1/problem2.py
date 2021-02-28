@@ -34,7 +34,7 @@ import numpy as np
 def compute_fx(x, w, b):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    fx = sum(a * b for [a, b] in zip(x, w)) + b
     #########################################
     return fx
 #---------------------
