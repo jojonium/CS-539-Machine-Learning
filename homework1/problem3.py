@@ -291,7 +291,7 @@ def gaussian_kernel_matrix(X1, X2, sigma=1.0):
 def compute_fx(Kt, a, y, b):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    fx = sum([ai * yi * kti for (ai, yi, kti) in zip(a, y, Kt)]) + b
     #########################################
     return fx
 #---------------------
@@ -339,7 +339,7 @@ def compute_fx(Kt, a, y, b):
 def predict(K_test_train, a, y, b):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    y_test = np.array([1 if compute_fx(sample, a, y, b) > 0 else -1 for sample in K_test_train])
     #########################################
     return y_test
 #---------------------
