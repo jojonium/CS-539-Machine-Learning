@@ -116,7 +116,7 @@ def linear_kernel_matrix(X1, X2):
 def polynomial_kernel(x1, x2, d=2):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    k = (np.dot(x1, x2) + 1) ** d
     #########################################
     return k
 #---------------------
@@ -166,7 +166,7 @@ def polynomial_kernel(x1, x2, d=2):
 def polynomial_kernel_matrix(X1, X2, d=2):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    K = np.array([[polynomial_kernel(x1, x2, d) for x2 in X2] for x1 in X1])
     #########################################
     return K
 #---------------------
@@ -202,7 +202,7 @@ def polynomial_kernel_matrix(X1, X2, d=2):
 def gaussian_kernel(x1, x2, sigma=1.0):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    k = np.exp(-sum((a - b) ** 2 for (a, b) in zip(x1, x2)) / (2 * sigma * sigma))
     #########################################
     return k
 #---------------------
@@ -249,7 +249,7 @@ def gaussian_kernel(x1, x2, sigma=1.0):
 def gaussian_kernel_matrix(X1, X2, sigma=1.0):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    K = np.array([[gaussian_kernel(x1, x2, sigma) for x2 in X2] for x1 in X1])
     #########################################
     return K
 #---------------------
