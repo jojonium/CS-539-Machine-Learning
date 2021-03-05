@@ -103,7 +103,12 @@ def compute_gx(x, w, b):
 def compute_gradient(x, y, w, b, l=0.01):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    if 1 - y * compute_fx(x, w, b) > 0:
+        dL_dw = l * w - y * x
+        dL_db = -y
+    else:
+        dL_dw = l * w
+        dL_db = 0
     #########################################
     return dL_dw, dL_db
 #---------------------
@@ -131,7 +136,7 @@ def compute_gradient(x, y, w, b, l=0.01):
 def update_w(w, dL_dw, lr=0.01):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    w = w - lr * dL_dw
     #########################################
     return w
 #---------------------
@@ -159,7 +164,7 @@ def update_w(w, dL_dw, lr=0.01):
 def update_b(b, dL_db, lr=0.01):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    b = b - lr * dL_db
     #########################################
     return b
 #---------------------
@@ -199,7 +204,9 @@ def train(X, Y, lr=0.01, C=1.0, n_epoch=10):
             y=Y[i] # the label of the i-th random instance
             #########################################
             ## INSERT YOUR CODE HERE
-    
+            dL_dw, dL_db = compute_gradient(x, y, w, b, l)
+            w = update_w(w, dL_dw, lr)
+            b = update_b(b, dL_db, lr)
             #########################################
     return w, b
 #---------------------
@@ -228,7 +235,7 @@ def train(X, Y, lr=0.01, C=1.0, n_epoch=10):
 def predict(X, w, b):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    Y = np.where(np.dot(X, w) + b > 0, 1, -1)
     #########################################
     return Y
 #---------------------
