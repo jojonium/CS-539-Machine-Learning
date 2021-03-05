@@ -370,7 +370,12 @@ def predict(K_test_train, a, y, b):
 def compute_HL(ai, yi, aj, yj, C=1.0):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    if yi == yj:
+        L = max(0, ai + aj - C)
+        H = min(C, ai + aj)
+    else:
+        L = max(0, ai - aj)
+        H = min(C, ai - aj + C)
     #########################################
     return H, L
 #---------------------
@@ -400,7 +405,7 @@ def compute_HL(ai, yi, aj, yj, C=1.0):
 def compute_E(Ki, a, y, b, i):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    Ei = compute_fx(Ki, a, y, b) - y[i]
     #########################################
     return Ei
 #---------------------
@@ -428,7 +433,7 @@ def compute_E(Ki, a, y, b, i):
 def compute_eta(Kii, Kjj, Kij):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    eta = 2 * Kij - Kii - Kjj
     #########################################
     return eta
 #---------------------
@@ -460,7 +465,14 @@ def compute_eta(Kii, Kjj, Kij):
 def update_ai(Ei, Ej, eta, ai, yi, H, L):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    if eta == 0:
+        ai_new = ai
+    else:
+        ai_new = ai - yi * (Ej - Ei) / eta
+        if ai_new > H:
+            ai_new = H
+        elif ai_new < L:
+            ai_new = L
     #########################################
     return ai_new
 #---------------------
@@ -490,7 +502,7 @@ def update_ai(Ei, Ej, eta, ai, yi, H, L):
 def update_aj(aj, ai, ai_new, yi, yj):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    aj_new = aj + yi * yj * (ai - ai_new)
     #########################################
     return aj_new
 #---------------------
@@ -528,7 +540,14 @@ def update_aj(aj, ai, ai_new, yi, yj):
 def update_b(b, ai_new, aj_new, ai, aj, yi, yj, Ei, Ej, Kii, Kjj, Kij, C=1.0):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    b1 = b - Ei - yj * (aj_new - aj) * Kij - yi * (ai_new - ai) * Kii
+    b2 = b - Ej - yj * (aj_new - aj) * Kjj - yi * (ai_new - ai) * Kij
+    if 0 < ai_new < C:
+        b = b1
+    elif 0 < aj_new < C:
+        b = b2
+    else:
+        b = (b1 + b2) / 2
     #########################################
     return b
 #---------------------
@@ -575,7 +594,18 @@ def train(K_train, y, C=1.0, n_epoch=10):
                 yj = y[j]
                 #########################################
                 ## INSERT YOUR CODE HERE
-    
+                (H, L) = compute_HL(ai, yi, aj, yj, C)
+                if H == L:
+                    continue
+                Ei = compute_E(K_train[i], a, y, b, i)
+                Ej = compute_E(K_train[j], a, y, b, j)
+                eta = compute_eta(K_train[i][i], K_train[j][j], K_train[i][j])
+                ai_new = update_ai(Ei, Ej, eta, ai, yi, H, L)
+                aj_new = update_aj(aj, ai, ai_new, yi, yj)
+                b_new = update_b(b, ai_new, aj_new, ai, aj, yi, yj, Ei, Ej, K_train[i][i], K_train[j][j], K_train[i][j], C)
+                a[i] = ai_new
+                a[j] = aj_new
+                b = b_new
                 #########################################
     return a, b
 #---------------------
