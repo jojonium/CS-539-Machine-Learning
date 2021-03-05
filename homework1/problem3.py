@@ -32,7 +32,7 @@ import numpy as np
 def linear_kernel(x1, x2):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    k = np.dot(x1, x2)
     #########################################
     return k
 #---------------------
@@ -80,7 +80,7 @@ def linear_kernel(x1, x2):
 def linear_kernel_matrix(X1, X2):
     #########################################
     ## INSERT YOUR CODE HERE
-    
+    K = np.array([[linear_kernel(x1, x2) for x2 in X2] for x1 in X1])
     #########################################
     return K
 #---------------------
