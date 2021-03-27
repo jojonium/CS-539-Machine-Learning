@@ -41,7 +41,7 @@ def Terms_and_Conditions():
         * This problem can be solved using 1 line(s) of code.
 '''
 #---------------------
-def compute_z(x: np.ndarray, w: np.ndarray, b: float):
+def compute_z(x, w, b):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
     z: float = sum(x * w) + b
@@ -203,7 +203,7 @@ def compute_da_dz(a):
 def compute_L(z, y):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    L = (z if z >= 1000 else np.log(1 + np.exp(z))) - (y * z)
     #########################################
     return L
     #-----------------
