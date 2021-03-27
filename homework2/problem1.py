@@ -137,7 +137,7 @@ def compute_dz_dw(x):
 def compute_a(z):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    a = 1 / (1 + np.exp(-max(-1000, min(z, 1000))))
+    a = 1 / (1 + np.exp(-max(-100, min(z, 100))))
     #########################################
     return a
     #-----------------
@@ -168,7 +168,7 @@ def compute_a(z):
 def compute_da_dz(a):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    da_dz = a - (a * a)
     #########################################
     return da_dz
     #-----------------
