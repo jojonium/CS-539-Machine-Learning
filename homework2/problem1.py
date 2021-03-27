@@ -371,7 +371,7 @@ def backward(x, y, z):
 def update_b(b, dL_db, alpha=0.001):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    b = b - alpha * dL_db
     #########################################
     return b
     #-----------------
@@ -404,7 +404,7 @@ def update_b(b, dL_db, alpha=0.001):
 def update_w(w, dL_dw, alpha=0.001):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    w = w - alpha * dL_dw
     #########################################
     return w
     #-----------------
@@ -449,7 +449,10 @@ def train(X, Y, alpha=0.001, n_epoch=100):
             y=Y[i] # the label of the i-th random sample
             #########################################
             ## INSERT YOUR CODE HERE (5 points)
-    
+            z = compute_z(x, w, b)
+            dL_dw, dL_db = backward(x, y, z)
+            b = update_b(b, dL_db, alpha)
+            w = update_w(w, dL_dw, alpha)
             #########################################
     return w, b
     #-----------------
@@ -482,7 +485,7 @@ def train(X, Y, alpha=0.001, n_epoch=100):
 def inference(x, w, b):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    y = 1 if compute_z(x, w, b) > 0 else 0
     #########################################
     return y
     #-----------------
@@ -519,7 +522,7 @@ def predict(Xtest, w, b):
         x=Xtest[i] # the feature vector of the i-th data sample
         #########################################
         ## INSERT YOUR CODE HERE (5 points)
-    
+        Ytest[i] = inference(x, w, b)
         #########################################
     return Ytest
     #-----------------
