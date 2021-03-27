@@ -267,7 +267,7 @@ def compute_dL_dz(z, y):
 def compute_dL_db(dL_dz, dz_db):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    dL_db = dL_dz * dz_db
     #########################################
     return dL_db
     #-----------------
