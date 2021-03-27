@@ -235,7 +235,7 @@ def compute_L(z, y):
 def compute_dL_dz(z, y):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    dL_dz = (1 if z >= 1000 else np.exp(z) / (np.exp(z) + 1)) - y
     #########################################
     return dL_dz
     #-----------------
