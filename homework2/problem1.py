@@ -335,7 +335,10 @@ def compute_dL_dw(dL_dz, dz_dw):
 def backward(x, y, z):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    dL_dz = compute_dL_dz(z, y)
+    dz_dw = compute_dz_dw(x)
+    dL_dw = compute_dL_dw(dL_dz, dz_dw)
+    dL_db = compute_dL_db(dL_dz, 1)
     #########################################
     return dL_dw, dL_db
     #-----------------
