@@ -24,7 +24,7 @@ def Terms_and_Conditions():
     '''
     #*******************************************
     # CHANGE HERE: if you have read and agree with the term above, change "False" to "True".
-    Read_and_Agree = False
+    Read_and_Agree = True
     #*******************************************
     return Read_and_Agree
 
@@ -41,10 +41,10 @@ def Terms_and_Conditions():
         * This problem can be solved using 1 line(s) of code.
 '''
 #---------------------
-def compute_z(x, w, b):
+def compute_z(x: np.ndarray, w: np.ndarray, b: float):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    z: float = sum(x * w) + b
     #########################################
     return z
     #-----------------
@@ -73,7 +73,7 @@ def compute_z(x, w, b):
 def compute_dz_db():
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    dz_db = 1
     #########################################
     return dz_db
     #-----------------
@@ -104,7 +104,7 @@ def compute_dz_db():
 def compute_dz_dw(x):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    dz_dw = x
     #########################################
     return dz_dw
     #-----------------
@@ -137,7 +137,7 @@ def compute_dz_dw(x):
 def compute_a(z):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    a = 1 / (1 + np.exp(-max(-1000, min(z, 1000))))
     #########################################
     return a
     #-----------------
