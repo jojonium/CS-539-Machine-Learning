@@ -299,7 +299,7 @@ def compute_dL_db(dL_dz, dz_db):
 def compute_dL_dw(dL_dz, dz_dw):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    dL_dw = dL_dz * dz_dw
     #########################################
     return dL_dw
     #-----------------
