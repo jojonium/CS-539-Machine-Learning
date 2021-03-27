@@ -28,7 +28,7 @@ We will use multi-class cross entropy as the loss function and stochastic gradie
 def compute_z(x, W, b):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    z = W.dot(x) + b
     #########################################
     return z
     #-----------------
@@ -59,7 +59,7 @@ def compute_z(x, W, b):
 def compute_dz_db(c):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    dz_db = np.diag(np.full(c, 1))
     #########################################
     return dz_db
     #-----------------
