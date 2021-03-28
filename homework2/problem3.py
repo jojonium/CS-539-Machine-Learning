@@ -814,7 +814,8 @@ def backward_layer1(x, a1, dL_da1):
 def backward(x, y, a1, a2, W2):
     #########################################
     ## INSERT YOUR CODE HERE (3 points)
-    
+    dL_db2, dL_dW2, dL_da1 = backward_layer2(y, a1, a2, W2)
+    dL_db1, dL_dW1 = backward_layer1(x, a1, dL_da1)
     #########################################
     return dL_db2, dL_dW2, dL_db1, dL_dW1
     #-----------------
@@ -866,7 +867,12 @@ def train(X, Y, h=3, alpha=0.01, n_epoch=100):
             y=Y[i] # the label of the i-th random sample
             #########################################
             ## INSERT YOUR CODE HERE (2 points)
-    
+            a1, a2 = forward(x, W1, b1, W2, b2)
+            dL_db2, dL_dW2, dL_db1, dL_dW1 = backward(x, y, a1, a2, W2)
+            W1 = W1 - alpha * dL_dW1
+            b1 = b1 - alpha * dL_db1
+            W2 = W2 - alpha * dL_dW2
+            b2 = b2 - alpha * dL_db2
             #########################################
     return W1, b1, W2, b2
     #-----------------
@@ -903,7 +909,9 @@ def train(X, Y, h=3, alpha=0.01, n_epoch=100):
 def inference(x, W1, b1, W2, b2):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    a1 = compute_a1(compute_z1(x, W1, b1))
+    a2 = compute_a2(compute_z2(a1, W2, b2))
+    y = np.argmax(a2)
     #########################################
     return y, a2
     #-----------------
@@ -945,7 +953,7 @@ def predict(Xtest, W1, b1, W2, b2):
         x=Xtest[i] # the feature vector of the i-th data sample
         #########################################
         ## INSERT YOUR CODE HERE (4 points)
-    
+        Ytest[i], P[i] = inference(x, W1, b1, W2, b2)
         #########################################
     return Ytest, P
     #-----------------
