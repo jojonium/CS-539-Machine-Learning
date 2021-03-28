@@ -728,7 +728,15 @@ def forward(x, W1, b1, W2, b2):
 def backward_layer2(y, a1, a2, W2):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    dL_da2 = compute_dL_da2(a2, y)
+    da2_dz2 = compute_da2_dz2(a2)
+    dL_dz2 = compute_dL_dz2(dL_da2, da2_dz2)
+    dz2_db2 = compute_dz2_db2(len(a2))
+    dL_db2 = compute_dL_db2(dL_dz2, dz2_db2)
+    dz2_dW2 = compute_dz2_dW2(a1, len(a2))
+    dL_dW2 = compute_dL_dW2(dL_dz2, dz2_dW2)
+    dz2_da1 = compute_dz2_da1(W2)
+    dL_da1 = compute_dL_da1(dL_dz2, dz2_da1)
     #########################################
     return dL_db2, dL_dW2, dL_da1
     #-----------------
