@@ -157,7 +157,7 @@ def compute_dz_dW(x, c):
 def compute_dL_dW(dL_dz, dz_dW):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    dL_dW = np.tensordot(dL_dz, dz_dW, 1)
     #########################################
     return dL_dW
     #-----------------
@@ -190,7 +190,9 @@ def compute_dL_dW(dL_dz, dz_dW):
 def compute_a(z):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    zprime = (z - max(z)) if abs(max(z)) >= 1000 else z
+    sigma = sum([np.exp(zi) for zi in zprime])
+    a = np.exp(zprime) / sigma
     #########################################
     return a
     #-----------------
