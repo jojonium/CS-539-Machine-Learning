@@ -261,7 +261,7 @@ def compute_da1_dz1(a1):
 def compute_dL_dz1(dL_da1, da1_dz1):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    dL_dz1 = sr.compute_dL_dz(dL_da1, da1_dz1)
     #########################################
     return dL_dz1
     #-----------------
@@ -296,7 +296,7 @@ def compute_dL_dz1(dL_da1, da1_dz1):
 def compute_z2(a1, W2, b2):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    z2 = sr.compute_z(a1, W2, b2)
     #########################################
     return z2
     #-----------------
@@ -327,7 +327,7 @@ def compute_z2(a1, W2, b2):
 def compute_dz2_db2(c):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    dz2_db2 = sr.compute_dz_db(c)
     #########################################
     return dz2_db2
     #-----------------
@@ -360,7 +360,7 @@ def compute_dz2_db2(c):
 def compute_dL_db2(dL_dz2, dz2_db2):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    dL_db2 = sr.compute_dL_db(dL_dz2, dz2_db2)
     #########################################
     return dL_db2
     #-----------------
@@ -392,7 +392,7 @@ def compute_dL_db2(dL_dz2, dz2_db2):
 def compute_dz2_dW2(a1, c):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    dz2_dW2 = sr.compute_dz_dW(a1, c)
     #########################################
     return dz2_dW2
     #-----------------
@@ -425,7 +425,7 @@ def compute_dz2_dW2(a1, c):
 def compute_dL_dW2(dL_dz2, dz2_dW2):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    dL_dW2 = sr.compute_dL_dW(dL_dz2, dz2_dW2)
     #########################################
     return dL_dW2
     #-----------------
