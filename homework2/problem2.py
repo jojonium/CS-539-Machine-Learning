@@ -123,7 +123,7 @@ def compute_dL_db(dL_dz, dz_db):
 def compute_dz_dW(x, c):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    dz_db: np.ndarray = np.diag(np.full(c, 1))
+    dz_db = np.diag(np.full(c, 1))
     dz_dW = [[x if j == 1 else np.zeros((len(x))) for j in i] for i in dz_db]
     #########################################
     return dz_dW
@@ -358,7 +358,6 @@ def forward(x, W, b):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
     a = compute_a(compute_z(x, W, b))
-    print(a)
     #########################################
     return a
     #-----------------
@@ -433,7 +432,7 @@ def backward(x, y, a):
 def update_b(b, dL_db, alpha=0.001):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    b = b - alpha * dL_db
     #########################################
     return b
     #-----------------
@@ -466,7 +465,7 @@ def update_b(b, dL_db, alpha=0.001):
 def update_W(W, dL_dW, alpha=0.001):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    W = W - alpha * dL_dW
     #########################################
     return W
     #-----------------
@@ -513,7 +512,10 @@ def train(X, Y, alpha=0.001, n_epoch=100):
             y=Y[i] # the label of the i-th random sample
             #########################################
             ## INSERT YOUR CODE HERE (1 points)
-    
+            a = forward(x, W, b)
+            dL_dW, dL_db = backward(x, y, a)
+            W = update_W(W, dL_dW, alpha)
+            b = update_b(b, dL_db, alpha)
             #########################################
     return W, b
     #-----------------
@@ -548,7 +550,8 @@ def train(X, Y, alpha=0.001, n_epoch=100):
 def inference(x, W, b):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    a = compute_a(compute_z(x, W, b))
+    y = np.argmax(a)
     #########################################
     return y, a
     #-----------------
@@ -588,7 +591,7 @@ def predict(Xtest, W, b):
         x=Xtest[i] # the feature vector of the i-th data sample
         #########################################
         ## INSERT YOUR CODE HERE (5 points)
-    
+        Ytest[i], P[i] = inference(x, W, b)
         #########################################
     return Ytest, P
     #-----------------
