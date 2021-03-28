@@ -123,7 +123,8 @@ def compute_dL_db(dL_dz, dz_db):
 def compute_dz_dW(x, c):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    dz_db: np.ndarray = np.diag(np.full(c, 1))
+    dz_dW = [[x if j == 1 else np.zeros((len(x))) for j in i] for i in dz_db]
     #########################################
     return dz_dW
     #-----------------
