@@ -91,7 +91,7 @@ def compute_dz_db(c):
 def compute_dL_db(dL_dz, dz_db):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    dL_db = dz_db.dot(dL_dz)
     #########################################
     return dL_db
     #-----------------
