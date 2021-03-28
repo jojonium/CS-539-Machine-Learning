@@ -162,7 +162,7 @@ def compute_dz1_dW1(x, h=3):
 def compute_dL_dW1(dL_dz1, dz1_dW1):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    dL_dW1 = sr.compute_dL_dW(dL_dz1, dz1_dW1)
     #########################################
     return dL_dW1
     #-----------------
@@ -196,7 +196,7 @@ def compute_dL_dW1(dL_dz1, dz1_dW1):
 def compute_a1(z1):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    a1 = np.array([lr.compute_a(z) for z in z1])
     #########################################
     return a1
     #-----------------
@@ -228,7 +228,7 @@ def compute_a1(z1):
 def compute_da1_dz1(a1):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    da1_dz1 = np.array([[a1[i] - a1[i] * a1[i] if i == j else 0 for j in range(len(a1))] for i in range(len(a1))])
     #########################################
     return da1_dz1
     #-----------------
