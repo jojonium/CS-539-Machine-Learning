@@ -771,7 +771,12 @@ def backward_layer2(y, a1, a2, W2):
 def backward_layer1(x, a1, dL_da1):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    da1_dz1 = compute_da1_dz1(a1)
+    dL_dz1 = compute_dL_dz1(dL_da1, da1_dz1)
+    dz1_db1 = compute_dz1_db1(len(a1))
+    dL_db1 = compute_dL_db1(dL_dz1, dz1_db1)
+    dz1_dW1 = compute_dz1_dW1(x, len(a1))
+    dL_dW1 = compute_dL_dW1(dL_dz1, dz1_dW1)
     #########################################
     return dL_db1, dL_dW1
     #-----------------
