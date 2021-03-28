@@ -223,7 +223,7 @@ def compute_a(z):
 def compute_da_dz(a):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    da_dz = np.array([[a[i] * (1 - a[i]) if i == j else -a[i] * a[j] for j in range(len(a))] for i in range(len(a))])
     #########################################
     return da_dz
     #-----------------
@@ -255,7 +255,7 @@ def compute_da_dz(a):
 def compute_dL_dz(dL_da, da_dz):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    dL_dz = dL_da.dot(da_dz)
     #########################################
     return dL_dz
     #-----------------
@@ -289,7 +289,7 @@ def compute_dL_dz(dL_da, da_dz):
 def compute_L(a, y):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    L = 10000000000000000000000 if a[y] == 0 else -np.log(a[y])
     #########################################
     return L
     #-----------------
@@ -323,7 +323,8 @@ def compute_L(a, y):
 def compute_dL_da(a, y):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    dL_da = np.zeros_like(a)
+    dL_da[y] = -100000000000000000 if abs(a[y]) == 0 else -1/a[y]
     #########################################
     return dL_da
     #-----------------
@@ -356,7 +357,8 @@ def compute_dL_da(a, y):
 def forward(x, W, b):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    a = compute_a(compute_z(x, W, b))
+    print(a)
     #########################################
     return a
     #-----------------
@@ -392,7 +394,13 @@ def forward(x, W, b):
 def backward(x, y, a):
     #########################################
     ## INSERT YOUR CODE HERE (4 points)
-    
+    dL_da = compute_dL_da(a, y)
+    da_dz = compute_da_dz(a)
+    dL_dz = compute_dL_dz(dL_da, da_dz)
+    dz_dW = compute_dz_dW(x, len(a))
+    dL_dW = compute_dL_dW(dL_dz, dz_dW)
+    dz_db = compute_dz_db(len(a))
+    dL_db = compute_dL_db(dL_dz, dz_db)
     #########################################
     return dL_dW, dL_db
     #-----------------
