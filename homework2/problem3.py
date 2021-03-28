@@ -32,7 +32,7 @@ We will use multi-class cross entropy as the loss function and stochastic gradie
 def compute_z1(x, W1, b1):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    z1 = sr.compute_z(x, W1, b1)
     #########################################
     return z1
     #-----------------
@@ -64,7 +64,7 @@ def compute_z1(x, W1, b1):
 def compute_dz1_db1(h=3):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    dz1_db1 = sr.compute_dz_db(h)
     #########################################
     return dz1_db1
     #-----------------
@@ -97,7 +97,7 @@ def compute_dz1_db1(h=3):
 def compute_dL_db1(dL_dz1, dz1_db1):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    dL_db1 = sr.compute_dL_db(dL_dz1, dz1_db1)
     #########################################
     return dL_db1
     #-----------------
@@ -129,7 +129,7 @@ def compute_dL_db1(dL_dz1, dz1_db1):
 def compute_dz1_dW1(x, h=3):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    dz1_dW1 = sr.compute_dz_dW(x, h)
     #########################################
     return dz1_dW1
     #-----------------
