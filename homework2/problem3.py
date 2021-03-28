@@ -457,7 +457,7 @@ def compute_dL_dW2(dL_dz2, dz2_dW2):
 def compute_dz2_da1(W2):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    dz2_da1 = W2
     #########################################
     return dz2_da1
     #-----------------
@@ -489,7 +489,7 @@ def compute_dz2_da1(W2):
 def compute_dL_da1(dL_dz2, dz2_da1):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    dL_da1 = dL_dz2.dot(dz2_da1)
     #########################################
     return dL_da1
     #-----------------
@@ -521,7 +521,7 @@ def compute_dL_da1(dL_dz2, dz2_da1):
 def compute_a2(z2):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    a2 = sr.compute_a(z2)
     #########################################
     return a2
     #-----------------
@@ -553,7 +553,7 @@ def compute_a2(z2):
 def compute_da2_dz2(a2):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    da2_dz2 = sr.compute_da_dz(a2)
     #########################################
     return da2_dz2
     #-----------------
@@ -586,7 +586,7 @@ def compute_da2_dz2(a2):
 def compute_dL_dz2(dL_da2, da2_dz2):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    dL_dz2 = sr.compute_dL_dz(dL_da2, da2_dz2)
     #########################################
     return dL_dz2
     #-----------------
@@ -619,7 +619,7 @@ def compute_dL_dz2(dL_da2, da2_dz2):
 def compute_L(a2, y):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    L = sr.compute_L(a2, y)
     #########################################
     return L
     #-----------------
@@ -652,7 +652,7 @@ def compute_L(a2, y):
 def compute_dL_da2(a2, y):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    dL_da2 = sr.compute_dL_da(a2, y)
     #########################################
     return dL_da2
     #-----------------
@@ -688,7 +688,10 @@ def compute_dL_da2(a2, y):
 def forward(x, W1, b1, W2, b2):
     #########################################
     ## INSERT YOUR CODE HERE (1 points)
-    
+    z1 = compute_z1(x, W1, b1)
+    a1 = compute_a1(z1)
+    z2 = compute_z2(a1, W2, b2)
+    a2 = compute_a2(z2)
     #########################################
     return a1, a2
     #-----------------
