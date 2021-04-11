@@ -109,7 +109,7 @@ def conv2d_b(x_b, W_b, b_b):
         * This problem can be solved using 5 line(s) of code.
 '''
 #---------------------
-def conv2d_c(x_c: th.Tensor, W_c: th.Tensor, b_c: th.Tensor):
+def conv2d_c(x_c, W_c, b_c):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
     c, h, w = x_c.size()
