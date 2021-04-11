@@ -150,7 +150,7 @@ def conv2d_c(x_c, W_c, b_c):
 def compute_z1(x, W1, b1):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    z1 = th.conv2d(x, W1, b1)
     #########################################
     return z1
     #-----------------
@@ -181,7 +181,7 @@ def compute_z1(x, W1, b1):
 def compute_a1(z1):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    a1 = th.nn.ReLU()(z1)
     #########################################
     return a1
     #-----------------
@@ -212,7 +212,7 @@ def compute_a1(z1):
 def compute_p1(a1):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    p1 = th.nn.MaxPool2d(2)(a1)
     #########################################
     return p1
     #-----------------
@@ -245,7 +245,7 @@ def compute_p1(a1):
 def compute_z2(p1, W2, b2):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    z2 = th.conv2d(p1, W2, b2)
     #########################################
     return z2
     #-----------------
@@ -276,7 +276,7 @@ def compute_z2(p1, W2, b2):
 def compute_a2(z2):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    a2 = th.nn.ReLU()(z2)
     #########################################
     return a2
     #-----------------
@@ -307,7 +307,7 @@ def compute_a2(z2):
 def compute_p2(a2):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    p2 = th.nn.MaxPool2d(2)(a2)
     #########################################
     return p2
     #-----------------
@@ -338,7 +338,7 @@ def compute_p2(a2):
 def flatten(p2):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    f = th.flatten(p2, 1)
     #########################################
     return f
     #-----------------
@@ -372,7 +372,7 @@ def flatten(p2):
 def compute_z3(f, W3, b3):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    z3 = f@W3 + b3
     #########################################
     return z3
     #-----------------
@@ -410,7 +410,14 @@ def compute_z3(f, W3, b3):
 def forward(x, W1, b1, W2, b2, W3, b3):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    z1 = compute_z1(x, W1, b1)
+    a1 = compute_a1(z1)
+    p1 = compute_p1(a1)
+    z2 = compute_z2(p1, W2, b2)
+    a2 = compute_a2(z2)
+    p2 = compute_p2(a2)
+    f = flatten(p2)
+    z3 = compute_z3(f, W3, b3)
     #########################################
     return z3
     #-----------------
@@ -443,7 +450,7 @@ def forward(x, W1, b1, W2, b2, W3, b3):
 def compute_L(z3, y):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    L = th.nn.BCEWithLogitsLoss()(z3, y)
     #########################################
     return L
     #-----------------
@@ -473,7 +480,7 @@ def compute_L(z3, y):
 def update_parameters(optimizer):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    sr.update_parameters(optimizer)
     #########################################
     #-----------------
     '''  
@@ -536,7 +543,10 @@ def train(data_loader, c, c1, c2, h, w, s1, s2, alpha=0.001, n_epoch=100):
             y=mini_batch[1] # the labels of the samples in a mini-batch
             #########################################
             ## INSERT YOUR CODE HERE (2 points)
-    
+            update_parameters(optimizer)
+            z3 = forward(x, W1, b1, W2, b2, W3, b3)
+            L = compute_L(z3, y)
+            L.backward()
             #########################################
     return W1, b1, W2, b2, W3, b3
     #-----------------
@@ -576,7 +586,8 @@ def train(data_loader, c, c1, c2, h, w, s1, s2, alpha=0.001, n_epoch=100):
 def predict(x, W1, b1, W2, b2, W3, b3):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    z = forward(x, W1, b1, W2, b2, W3, b3)
+    y_predict = (z > 0).int()
     #########################################
     return y_predict
     #-----------------
