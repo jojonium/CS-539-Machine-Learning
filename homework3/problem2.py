@@ -34,7 +34,12 @@ import problem1 as sr
 def conv2d_a(x_a, W_a, b_a):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    h, w = x_a.size()
+    s = W_a.size()[0]
+    z_a = th.empty((h - s + 1, w - s + 1))
+    for i in range(h-s+1):
+        for j in range(w-s+1):
+            z_a[i, j] = (W_a * x_a[i:i+s, j:j+s]).sum() + b_a
     #########################################
     return z_a
     #-----------------
@@ -68,7 +73,12 @@ def conv2d_a(x_a, W_a, b_a):
 def conv2d_b(x_b, W_b, b_b):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    c, h, w = x_b.size()
+    s = W_b.size()[1]
+    z_b = th.empty((h - s + 1, w - s + 1))
+    for i in range(h-s+1):
+        for j in range(w-s+1):
+            z_b[i, j] = (W_b * x_b[:, i:i+s, j:j+s]).sum() + b_b
     #########################################
     return z_b
     #-----------------
@@ -99,10 +109,14 @@ def conv2d_b(x_b, W_b, b_b):
         * This problem can be solved using 5 line(s) of code.
 '''
 #---------------------
-def conv2d_c(x_c, W_c, b_c):
+def conv2d_c(x_c: th.Tensor, W_c: th.Tensor, b_c: th.Tensor):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    c, h, w = x_c.size()
+    c1, c, s, s = W_c.size()
+    z_c = th.empty((c1, h - s + 1, w - s + 1))
+    for i in range(len(W_c)):
+        z_c[i] = conv2d_b(x_c, W_c[i], b_c[i])
     #########################################
     return z_c
     #-----------------
