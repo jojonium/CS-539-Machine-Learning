@@ -32,7 +32,7 @@ def Terms_and_Conditions():
     '''
     #*******************************************
     # CHANGE HERE: if you have read and agree with the term above, change "False" to "True".
-    Read_and_Agree = False
+    Read_and_Agree = True
     #*******************************************
     return Read_and_Agree
 
@@ -54,7 +54,7 @@ def Terms_and_Conditions():
 def compute_z(x, W, b):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    z = x@W + b
     #########################################
     return z
     #-----------------
@@ -88,7 +88,7 @@ def compute_z(x, W, b):
 def compute_L(z, y):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    L = th.nn.CrossEntropyLoss(reduction='mean')(z, y)
     #########################################
     return L
     #-----------------
@@ -120,7 +120,8 @@ def compute_L(z, y):
 def update_parameters(optimizer):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    optimizer.step()
+    optimizer.zero_grad()
     #########################################
     #-----------------
     '''  
@@ -165,7 +166,10 @@ def train(data_loader, c, p, alpha=0.001, n_epoch=100):
             y=mini_batch[1] # the labels of the samples in a mini-batch
             #########################################
             ## INSERT YOUR CODE HERE (2 points)
-    
+            update_parameters(optimizer)
+            z = compute_z(x, W, b)
+            L = compute_L(z, y)
+            L.backward()
             #########################################
     return W, b
     #-----------------
@@ -200,7 +204,8 @@ def train(data_loader, c, p, alpha=0.001, n_epoch=100):
 def predict(x, W, b):
     #########################################
     ## INSERT YOUR CODE HERE (4 points)
-    
+    z = compute_z(x, W, b)
+    y_predict = th.argmax(z, 1)
     #########################################
     return y_predict
     #-----------------
