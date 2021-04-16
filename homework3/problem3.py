@@ -29,7 +29,7 @@ import problem1 as sr
 def compute_zt(xt, ht_1, U, V, b_h):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    zt = xt @ U + b_h + ht_1 @ V
     #########################################
     return zt
     #-----------------
@@ -60,7 +60,7 @@ def compute_zt(xt, ht_1, U, V, b_h):
 def compute_ht(zt):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    ht = th.nn.Tanh()(zt)
     #########################################
     return ht
     #-----------------
@@ -95,7 +95,8 @@ def compute_ht(zt):
 def step(xt, ht_1, U, V, b_h):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    zt = compute_zt(xt, ht_1, U, V, b_h)
+    ht = compute_ht(zt)
     #########################################
     return ht
     #-----------------
@@ -129,7 +130,7 @@ def step(xt, ht_1, U, V, b_h):
 def compute_z(ht, W, b):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    z = ht @ W + b
     #########################################
     return z
     #-----------------
@@ -168,7 +169,9 @@ def compute_z(ht, W, b):
 def forward(x, ht, U, V, b_h, W, b):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    for k in range(x.size()[1]):
+        ht = step(x[:, k], ht, U, V, b_h)
+    z = compute_z(ht, W, b)
     #########################################
     return z
     #-----------------
@@ -201,7 +204,7 @@ def forward(x, ht, U, V, b_h, W, b):
 def compute_L(z, y):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    L = th.nn.BCEWithLogitsLoss()(z, y)
     #########################################
     return L
     #-----------------
@@ -231,7 +234,7 @@ def compute_L(z, y):
 def update_parameters(optimizer):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    sr.update_parameters(optimizer)
     #########################################
     #-----------------
     '''  
@@ -284,7 +287,10 @@ def train(data_loader, p, h, n, alpha=0.001, n_epoch=1000):
             y=mini_batch[1] # the labels of the samples in a mini-batch
             #########################################
             ## INSERT YOUR CODE HERE (4 points)
-    
+            update_parameters(optimizer)
+            z = forward(x, ht, U, V, b_h, W, b)
+            L = compute_L(z, y)
+            L.backward()
             #########################################
     return U, V, b_h, W, b
     #-----------------
@@ -324,7 +330,8 @@ def predict(x, U, V, b_h, W, b):
     ht = th.zeros(x.size()[0], V.size()[0]) # initialize the hidden states as all zeros
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    z = forward(x, ht, U, V, b_h, W, b)
+    y_predict = (z > 0).int()
     #########################################
     return y_predict
     #-----------------
