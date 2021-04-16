@@ -25,7 +25,7 @@ import problem1 as sr
 def compute_xh(xt, ht_1):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    xh = th.cat((xt, ht_1), 1)
     #########################################
     return xh
     #-----------------
@@ -59,7 +59,7 @@ def compute_xh(xt, ht_1):
 def compute_z_f(xh, W_f, b_f):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    z_f = sr.compute_z(xh, W_f, b_f)
     #########################################
     return z_f
     #-----------------
@@ -90,7 +90,7 @@ def compute_z_f(xh, W_f, b_f):
 def compute_f_t(z_f):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    f_t = th.sigmoid(z_f)
     #########################################
     return f_t
     #-----------------
@@ -124,7 +124,7 @@ def compute_f_t(z_f):
 def compute_z_i(xh, W_i, b_i):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    z_i = sr.compute_z(xh, W_i, b_i)
     #########################################
     return z_i
     #-----------------
@@ -155,7 +155,7 @@ def compute_z_i(xh, W_i, b_i):
 def compute_i_t(z_i):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    i_t = th.sigmoid(z_i)
     #########################################
     return i_t
     #-----------------
@@ -189,7 +189,7 @@ def compute_i_t(z_i):
 def compute_z_c(xh, W_c, b_c):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    z_c = sr.compute_z(xh, W_c, b_c)
     #########################################
     return z_c
     #-----------------
@@ -220,7 +220,7 @@ def compute_z_c(xh, W_c, b_c):
 def compute_C_c(z_c):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    C_c = th.nn.Tanh()(z_c)
     #########################################
     return C_c
     #-----------------
@@ -254,7 +254,7 @@ def compute_C_c(z_c):
 def compute_Ct(f_t, i_t, C_c, Ct_1):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    Ct = f_t * Ct_1 + i_t * C_c
     #########################################
     return Ct
     #-----------------
@@ -288,7 +288,7 @@ def compute_Ct(f_t, i_t, C_c, Ct_1):
 def compute_z_o(xh, W_o, b_o):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    z_o = sr.compute_z(xh, W_o, b_o)
     #########################################
     return z_o
     #-----------------
@@ -319,7 +319,7 @@ def compute_z_o(xh, W_o, b_o):
 def compute_o_t(z_o):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    o_t = th.sigmoid(z_o)
     #########################################
     return o_t
     #-----------------
@@ -351,7 +351,7 @@ def compute_o_t(z_o):
 def compute_ht(Ct, o_t):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    ht = o_t * th.nn.Tanh()(Ct)
     #########################################
     return ht
     #-----------------
@@ -394,7 +394,17 @@ def compute_ht(Ct, o_t):
 def step(xt, ht_1, Ct_1, W_f, b_f, W_i, b_i, W_c, b_c, W_o, b_o):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    xh = compute_xh(xt, ht_1)
+    z_f = compute_z_f(xh, W_f, b_f)
+    f_t = compute_f_t(z_f)
+    z_i = compute_z_i(xh, W_i, b_i)
+    i_t = compute_i_t(z_i)
+    z_c = compute_z_c(xh, W_c, b_c)
+    C_c = compute_C_c(z_c)
+    z_o = compute_z_o(xh, W_o, b_o)
+    o_t = compute_o_t(z_o)
+    Ct = compute_Ct(f_t, i_t, C_c, Ct_1)
+    ht = compute_ht(Ct, o_t)
     #########################################
     return Ct, ht
     #-----------------
@@ -429,7 +439,7 @@ def step(xt, ht_1, Ct_1, W_f, b_f, W_i, b_i, W_c, b_c, W_o, b_o):
 def compute_z(ht, W, b):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    z = sr.compute_z(ht, W, b)
     #########################################
     return z
     #-----------------
@@ -474,7 +484,9 @@ def compute_z(ht, W, b):
 def forward(x, ht, Ct, W_f, b_f, W_i, b_i, W_c, b_c, W_o, b_o, W, b):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    for k in range(x.size()[1]):
+        Ct, ht = step(x[:, k], ht, Ct, W_f, b_f, W_i, b_i, W_c, b_c, W_o, b_o)
+    z = compute_z(ht, W, b)
     #########################################
     return z
     #-----------------
@@ -508,7 +520,7 @@ def forward(x, ht, Ct, W_f, b_f, W_i, b_i, W_c, b_c, W_o, b_o, W, b):
 def compute_L(z, y):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    L = sr.compute_L(z, y)
     #########################################
     return L
     #-----------------
@@ -538,7 +550,7 @@ def compute_L(z, y):
 def update_parameters(optimizer):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    sr.update_parameters(optimizer)
     #########################################
     #-----------------
     '''  
@@ -603,7 +615,10 @@ def train(data_loader, p, h, n, c, alpha=0.001, n_epoch=1000):
             y=mini_batch[1] # the labels of the samples in a mini-batch
             #########################################
             ## INSERT YOUR CODE HERE (2 points)
-    
+            update_parameters(optimizer)
+            z = forward(x, ht, Ct, W_f, b_f, W_i, b_i, W_c, b_c, W_o, b_o, W, b)
+            L = compute_L(z, y)
+            L.backward()
             #########################################
     return W_f, b_f, W_i, b_i, W_c, b_c, W_o, b_o, W, b
     #-----------------
@@ -648,7 +663,8 @@ def predict(x, W_f, b_f, W_i, b_i, W_c, b_c, W_o, b_o, W, b):
     Ct = th.zeros(x.size()[0], W.size()[0]) # initialize the cell states as all zeros
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    z = forward(x, ht, Ct, W_f, b_f, W_i, b_i, W_c, b_c, W_o, b_o, W, b)
+    y_predict = th.argmax(z, 1)
     #########################################
     return y_predict
     #-----------------
