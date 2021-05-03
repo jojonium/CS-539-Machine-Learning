@@ -1,3 +1,5 @@
+import random
+
 import numpy as np
 from problem1 import choose_action_explore
 # Note: please don't import any new package. You should solve this problem using only the package(s) above.
@@ -25,7 +27,7 @@ from problem1 import choose_action_explore
 def random_policy(c):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    a = choose_action_explore(c)
     #########################################
     return a
     #-----------------
@@ -58,7 +60,7 @@ def random_policy(c):
 def greedy_policy(s, Q):
     #########################################
     ## INSERT YOUR CODE HERE (3 points)
-    
+    a = np.argmax(Q[s])
     #########################################
     return a
     #-----------------
@@ -92,7 +94,7 @@ def greedy_policy(s, Q):
 def choose_action_e_greedy(s, Q, e):
     #########################################
     ## INSERT YOUR CODE HERE (3 points)
-    
+    a = random_policy(Q[s].size) if random.random() < e else greedy_policy(s, Q)
     #########################################
     return a
     #-----------------
@@ -125,7 +127,7 @@ def choose_action_e_greedy(s, Q, e):
 def running_average(C, v_sample, lr=0.1):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    C_new = C * (1 - lr) + v_sample * lr
     #########################################
     return C_new
     #-----------------
@@ -162,7 +164,8 @@ def running_average(C, v_sample, lr=0.1):
 def update_Q(s, a, s_new, r, Q, gamma=0.95, lr=0.1):
     #########################################
     ## INSERT YOUR CODE HERE (10 points)
-    
+    sample = r + gamma * np.max(Q[s_new])
+    Q[s, a] = running_average(Q[s, a], sample, lr)
     #########################################
     #-----------------
     '''  
