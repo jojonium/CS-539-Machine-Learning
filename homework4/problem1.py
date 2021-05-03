@@ -1,5 +1,3 @@
-import random
-
 import numpy as np
 # Note: please don't import any new package. You should solve this problem using only the package(s) above.
 #-------------------------------------------------------------------------
@@ -142,7 +140,7 @@ def choose_action_exploit(Rt, Ct):
 def choose_action(Rt, Ct, e=0.05):
     #########################################
     ## INSERT YOUR CODE HERE (6 points)
-    a = choose_action_explore(Ct.size) if random.random() < e else choose_action_exploit(Rt, Ct)
+    a = choose_action_explore(Ct.size) if np.random.random() < e else choose_action_exploit(Rt, Ct)
     #########################################
     return a
     #-----------------

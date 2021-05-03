@@ -1,5 +1,3 @@
-import random
-
 import numpy as np
 from problem1 import choose_action_explore
 # Note: please don't import any new package. You should solve this problem using only the package(s) above.
@@ -94,7 +92,7 @@ def greedy_policy(s, Q):
 def choose_action_e_greedy(s, Q, e):
     #########################################
     ## INSERT YOUR CODE HERE (3 points)
-    a = random_policy(Q[s].size) if random.random() < e else greedy_policy(s, Q)
+    a = random_policy(Q[s].size) if np.random.random() < e else greedy_policy(s, Q)
     #########################################
     return a
     #-----------------
