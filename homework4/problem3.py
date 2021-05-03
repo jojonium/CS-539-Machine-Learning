@@ -27,7 +27,7 @@ from problem2 import random_policy
 def compute_Q(S, W, b):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    Q = S@W + b
     #########################################
     return Q
     #-----------------
@@ -71,7 +71,7 @@ def compute_Q(S, W, b):
 def compute_Qt(S_new, R, T, W, b, gamma=0.95):
     #########################################
     ## INSERT YOUR CODE HERE (5 points)
-    
+    new_Q = compute_Q(S_new, W, b)
     #########################################
     return Qt
     #-----------------
@@ -107,7 +107,7 @@ def compute_Qt(S_new, R, T, W, b, gamma=0.95):
 def compute_L(Q, A, Qt):
     #########################################
     ## INSERT YOUR CODE HERE (5 points)
-    
+
     #########################################
     return L
     #-----------------
@@ -136,7 +136,8 @@ def compute_L(Q, A, Qt):
 def update_parameters(optimizer):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    optimizer.step()
+    optimizer.zero_grad()
     #########################################
     #-----------------
     '''  
@@ -239,7 +240,7 @@ def predict_q(s, W, b):
 def greedy_policy(q):
     #########################################
     ## INSERT YOUR CODE HERE (2 points)
-    
+    a = np.argmax(q.detach())
     #########################################
     return a
     #-----------------
@@ -273,7 +274,7 @@ def greedy_policy(q):
 def egreedy_policy(q, e):
     #########################################
     ## INSERT YOUR CODE HERE (3 points)
-    
+    a = random_policy(q.shape[0]) if np.random.random() < e else np.argmax(q.detach())
     #########################################
     return a
     #-----------------
