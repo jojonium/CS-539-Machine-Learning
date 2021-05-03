@@ -1,3 +1,5 @@
+import random
+
 import numpy as np
 # Note: please don't import any new package. You should solve this problem using only the package(s) above.
 #-------------------------------------------------------------------------
@@ -22,7 +24,7 @@ def Terms_and_Conditions():
     '''
     #*******************************************
     # CHANGE HERE: if you have read and agree with the term above, change "False" to "True".
-    Read_and_Agree = False
+    Read_and_Agree = True
     #*******************************************
     return Read_and_Agree
 
@@ -41,7 +43,8 @@ def Terms_and_Conditions():
 def update_memory(a, r, Rt, Ct):
     #########################################
     ## INSERT YOUR CODE HERE (3 points)
-    
+    Rt[a] = Rt[a] + r
+    Ct[a] = Ct[a] + 1
     #########################################
     #-----------------
     '''  
@@ -71,7 +74,7 @@ def update_memory(a, r, Rt, Ct):
 def choose_action_explore(c):
     #########################################
     ## INSERT YOUR CODE HERE (3 points)
-    
+    a = np.random.randint(0, c)
     #########################################
     return a
     #-----------------
@@ -105,7 +108,7 @@ def choose_action_explore(c):
 def choose_action_exploit(Rt, Ct):
     #########################################
     ## INSERT YOUR CODE HERE (3 points)
-    
+    a = np.argmax([0 if Ct[i] == 0 else Rt[i] / Ct[i] for i in range(Rt.size)])
     #########################################
     return a
     #-----------------
@@ -139,7 +142,7 @@ def choose_action_exploit(Rt, Ct):
 def choose_action(Rt, Ct, e=0.05):
     #########################################
     ## INSERT YOUR CODE HERE (6 points)
-    
+    a = choose_action_explore(Ct.size) if random.random() < e else choose_action_exploit(Rt, Ct)
     #########################################
     return a
     #-----------------
