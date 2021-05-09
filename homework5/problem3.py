@@ -26,7 +26,7 @@ from scipy.linalg import inv
 def compute_digamma(x_g):
     #########################################
     ## INSERT YOUR CODE HERE (4 points)
-    
+    dx_g = psi(x_g)
     #########################################
     return dx_g
     #-----------------
@@ -59,7 +59,7 @@ def compute_digamma(x_g):
 def compute_phi_w(w, Beta, gamma_d):
     #########################################
     ## INSERT YOUR CODE HERE (4 points)
-    
+
     #########################################
     return phi_w
     #-----------------
@@ -91,7 +91,7 @@ def compute_phi_w(w, Beta, gamma_d):
 def compute_phi_d(Beta, gamma_d):
     #########################################
     ## INSERT YOUR CODE HERE (4 points)
-    
+
     #########################################
     return phi_d
     #-----------------
@@ -123,7 +123,7 @@ def compute_phi_d(Beta, gamma_d):
 def compute_Phi(Beta, Gamma):
     #########################################
     ## INSERT YOUR CODE HERE (4 points)
-    
+
     #########################################
     return Phi
     #-----------------
