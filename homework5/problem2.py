@@ -21,10 +21,11 @@ import numpy as np
         * This problem can be solved using 2 line(s) of code.
 '''
 #---------------------
-def compute_phi_w(w, Beta, theta_d):
+def compute_phi_w(w, Beta: np.ndarray, theta_d):
     #########################################
     ## INSERT YOUR CODE HERE (5 points)
-    
+    denominator = np.sum([theta_d[i] * Beta[i, w] for i in range(Beta.shape[0])])
+    phi_w = (theta_d * Beta[:, w]) / denominator
     #########################################
     return phi_w
     #-----------------
