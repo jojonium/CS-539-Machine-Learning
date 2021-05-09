@@ -21,7 +21,7 @@ import numpy as np
         * This problem can be solved using 2 line(s) of code.
 '''
 #---------------------
-def compute_phi_w(w, Beta: np.ndarray, theta_d):
+def compute_phi_w(w, Beta, theta_d):
     #########################################
     ## INSERT YOUR CODE HERE (5 points)
     denominator = np.sum([theta_d[i] * Beta[i, w] for i in range(Beta.shape[0])])
@@ -58,7 +58,7 @@ def compute_phi_w(w, Beta: np.ndarray, theta_d):
 def compute_phi_d(Beta, theta_d):
     #########################################
     ## INSERT YOUR CODE HERE (5 points)
-    
+    phi_d = np.array([compute_phi_w(w, Beta, theta_d) for w in range(Beta.shape[1])])
     #########################################
     return phi_d
     #-----------------
@@ -93,7 +93,7 @@ def compute_phi_d(Beta, theta_d):
 def compute_Phi(Theta, Beta):
     #########################################
     ## INSERT YOUR CODE HERE (5 points)
-    
+    Phi = np.array([compute_phi_d(Beta, Theta[d]) for d in range(Theta.shape[0])])
     #########################################
     return Phi
     #-----------------
@@ -125,7 +125,7 @@ def compute_Phi(Theta, Beta):
 def compute_theta_d(C_d, phi_d):
     #########################################
     ## INSERT YOUR CODE HERE (5 points)
-    
+    theta_d = np.sum(C_d[i] * phi_d[i] for i in range(len(C_d))) / np.sum(C_d)
     #########################################
     return theta_d
     #-----------------
@@ -160,7 +160,7 @@ def compute_theta_d(C_d, phi_d):
 def compute_Theta(C, Phi):
     #########################################
     ## INSERT YOUR CODE HERE (5 points)
-    
+    Theta = np.array([compute_theta_d(C[d], Phi[d]) for d in range(C.shape[0])])
     #########################################
     return Theta
     #-----------------
@@ -192,7 +192,8 @@ def compute_Theta(C, Phi):
 def compute_beta_t(C, phi_t):
     #########################################
     ## INSERT YOUR CODE HERE (5 points)
-    
+    denominator = np.sum([[C[d, i] * phi_t[d, i] for d in range(C.shape[0])] for i in range(C.shape[1])])
+    beta_t = np.sum(C[d] * phi_t[d] for d in range(C.shape[0])) / denominator
     #########################################
     return beta_t
     #-----------------
@@ -227,7 +228,7 @@ def compute_beta_t(C, phi_t):
 def compute_Beta(C, Phi):
     #########################################
     ## INSERT YOUR CODE HERE (5 points)
-    
+    Beta = np.array([compute_beta_t(C, Phi[:, :, t]) for t in range(Phi.shape[2])])
     #########################################
     return Beta
     #-----------------
@@ -270,7 +271,9 @@ def PLSA(C, c, n_iter=30):
         pass # no operation (you can ignore this line)
         #########################################
         ## INSERT YOUR CODE HERE (5 points)
-    
+        Phi = compute_Phi(Theta, Beta)
+        Theta = compute_Theta(C, Phi)
+        Beta = compute_Beta(C, Phi)
         #########################################
     return Theta, Beta, Phi
     #-----------------
