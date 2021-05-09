@@ -22,7 +22,7 @@ def Terms_and_Conditions():
     '''
     #*******************************************
     # CHANGE HERE: if you have read and agree with the term above, change "False" to "True".
-    Read_and_Agree = False
+    Read_and_Agree = True
     #*******************************************
     return Read_and_Agree
 
@@ -40,7 +40,7 @@ def Terms_and_Conditions():
 def compute_PT(S):
     #########################################
     ## INSERT YOUR CODE HERE (4 points)
-    
+    s = S.sum() / len(S)
     #########################################
     return s
     #-----------------
@@ -73,7 +73,7 @@ def compute_PT(S):
 def count_frequency(W, c):
     #########################################
     ## INSERT YOUR CODE HERE (4 points)
-    
+    C = np.bincount(W)
     #########################################
     return C
     #-----------------
@@ -105,7 +105,7 @@ def count_frequency(W, c):
 def laplace_smoothing(C, k):
     #########################################
     ## INSERT YOUR CODE HERE (4 points)
-    
+    PW = (C + k) / (C.sum() + k * len(C))
     #########################################
     return PW
     #-----------------
@@ -140,7 +140,10 @@ def laplace_smoothing(C, k):
 def compute_PW_T(Ws, Wn, k, c):
     #########################################
     ## INSERT YOUR CODE HERE (4 points)
-    
+    Cs = count_frequency(Ws, c)
+    Ps = laplace_smoothing(Cs, k)
+    Cn = count_frequency(Wn, c)
+    Pn = laplace_smoothing(Cn, k)
     #########################################
     return Ps, Pn
     #-----------------
@@ -174,7 +177,9 @@ def compute_PW_T(Ws, Wn, k, c):
 def likelihood_ratio(W, Ps, Pn, s):
     #########################################
     ## INSERT YOUR CODE HERE (4 points)
-    
+    prob_spam = s * np.prod([Ps[w] for w in W])
+    prob_normal = (1 - s) * np.prod([Pn[w] for w in W])
+    r = prob_spam / prob_normal
     #########################################
     return r
     #-----------------
