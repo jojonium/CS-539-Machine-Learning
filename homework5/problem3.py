@@ -265,7 +265,7 @@ def E_step(C, Alpha, Beta, n_iter_var=20):
 def compute_beta_t(C, phi_t):
     #########################################
     ## INSERT YOUR CODE HERE (4 points)
-    
+    beta_t = p2.compute_beta_t(C, phi_t)
     #########################################
     return beta_t
     #-----------------
@@ -298,7 +298,7 @@ def compute_beta_t(C, phi_t):
 def compute_Beta(C, Phi):
     #########################################
     ## INSERT YOUR CODE HERE (4 points)
-    
+    Beta = p2.compute_Beta(C, Phi)
     #########################################
     return Beta
     #-----------------
